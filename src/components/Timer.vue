@@ -2,9 +2,9 @@
   <div class="Timer">
     <p class="Timer-seconds">{{ countdown }} seconds</p>
 
-    <h3 class="Timer-text">{{ purpose }}</h3>
+    <h3 class="Timer-text">{{ timer.text }}</h3>
 
-    <div class="Timer-btn">Stop</div>
+    <div class="Timer-btn" @click="stop">Stop</div>
   </div>
 </template>
 
@@ -29,9 +29,7 @@ export default {
 
   data () {
     return {
-      myName: 'seth',
       interval: 0,
-      purpose: this.timer.text,
       countdown: this.timer.seconds
     }
   },
@@ -47,7 +45,7 @@ export default {
     stop () {
       console.log('Timer -> Stop')
       clearInterval(this.interval)
-      this.$emit('stop', this.timer)
+      this.$emit('stop')
     }
   }
 

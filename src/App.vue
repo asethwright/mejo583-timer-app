@@ -2,13 +2,12 @@
   <div id="app">
     <!-- Form Component goes here -->
     <TimerForm></TimerForm>
-    <transition name="fade">
-      <Timer
-        v-for="timer in timers"
-        :timer="timer"
-        @stop="stopped"
-      ></Timer>
-    </transition>
+    <Timer
+      v-for="(timer, index) in timers"
+      :key="timer.id"
+      :timer="timer"
+      @stop="stopped(index)"
+    ></Timer>
   </div>
 </template>
 
@@ -21,6 +20,7 @@ export default {
 
   data () {
     return {
+      timerid: 0,
       timers: []
     }
   },
@@ -40,14 +40,16 @@ export default {
   },
 
   methods: {
-    stopped (t) {
-      this.timers.splice(this.timers.indexOf(t), 1)
+    stopped (i) {
+      this.timers.splice(i, 1)
     },
 
     formSubmitted (data) {
       console.log('App -> formSubmitted', data)
+      this.timerid++
 
       this.timers.push({
+        id: this.timerid,
         seconds: data.seconds,
         text: data.text
       })
